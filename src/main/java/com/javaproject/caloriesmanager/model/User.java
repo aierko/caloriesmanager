@@ -1,13 +1,26 @@
 package com.javaproject.caloriesmanager.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.Date;
 import java.util.EnumSet;
 import java.util.Set;
 
 import static com.javaproject.caloriesmanager.util.MealsUtil.DEFAULT_CALORIES_PER_DAY;
 
-public class User extends AbstractNamedEntity {
+@Entity
+@Table(name = "users",uniqueConstraints = {@UniqueConstraint(columnNames = "email",name="users_uniq_email_idx")})
 
+public class User extends AbstractNamedEntity {
+    @Column(name="email",nullable = false,unique = true)
+    @NotBlank
+    @Size(max = 100)
+    @Email
     private String email;
 
     private String password;
